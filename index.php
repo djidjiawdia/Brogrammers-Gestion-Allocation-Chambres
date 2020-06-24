@@ -1,8 +1,9 @@
 <?php
 
-define("ROOT", 'http://djiadjidiaw.alwaysdata.net');
-// define("ROOT", 'http://localhost/gestionAllocationChambres');
+// define("ROOT", 'http://djiadjidiaw.alwaysdata.net');
+define("ROOT", 'http://localhost/gestionAllocationChambres');
 
-var_dump(ROOT);
+require_once './libs/Router.php';
 
-echo "Online";
+$router = new Router();
+$router->route();
