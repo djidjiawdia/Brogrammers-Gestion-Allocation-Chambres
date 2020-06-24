@@ -25,13 +25,17 @@ class Router {
                 if(file_exists($pathCtrl)){
                     require_once($pathCtrl);
                     $this->ctrl = new $ctrlFile();
-                    $action = $url[1];
-                    if(method_exists($this->ctrl, $action)){
-                        $this->ctrl->{$action}();
+                    if(empty($url[1])){
+                        $this->ctrl->index();
                     }else{
-                        require_once "./controllers/ErreurCtrl.php";
-                        $error = new ErreurCtrl();
-                        $error->showError("Cette méthode n'existe pas");
+                        $action = $url[1];
+                        if(method_exists($this->ctrl, $action)){
+                            $this->ctrl->{$action}();
+                        }else{
+                            require_once "./controllers/ErreurCtrl.php";
+                            $error = new ErreurCtrl();
+                            $error->showError("Cette méthode n'existe pas");
+                        }
                     }
                 }else{
                     require_once "./controllers/ErreurCtrl.php";
