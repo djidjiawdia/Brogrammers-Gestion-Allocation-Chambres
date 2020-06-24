@@ -12,6 +12,7 @@ $(document).ready(function(){
 
     /** Navigation **/
     const link = location.href.split('/')[4];
+    console.log(link);
     if(link !== ""){
         $("ul li").each((i, el) => {
             el.classList.remove("active");

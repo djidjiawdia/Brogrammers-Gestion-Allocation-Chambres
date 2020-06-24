@@ -1,6 +1,6 @@
 <?php
 
-// define("ROOT", 'http://djiadjidiaw.alwaysdata.net');
+define("ONLINE", 'http://broogrammers.alwaysdata.net');
 define("ROOT", 'http://localhost/gestionAllocationChambres');
 
 require_once './libs/Router.php';
