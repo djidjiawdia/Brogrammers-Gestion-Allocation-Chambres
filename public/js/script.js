@@ -39,6 +39,14 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(res){
                     console.log(res);
+                    if(res.type == "success"){
+                        $("#formAddRoom")[0].reset();
+                        $("#alert").addClass("alert-success");
+                    }else{
+                        $("#alert").addClass("alert-danger");
+                    }
+                    $("#alert").html(res.message);
+                    $("#alert").show();
                 }
             })
         }

@@ -29,9 +29,10 @@ abstract class Manager implements IDao {
         }
     }
 
-    public function executeUpdate($sql){
+    public function executeUpdate($sql, $data = null){
         $this->getConnexion();
-        $nbreLigne= $this->pdo->exec($sql);
+        $stmt = $this->pdo->prepare($sql);
+        $nbreLigne = $stmt->execute($data);
         $this->closeConnexion();
         return $nbreLigne;
     }

@@ -1,5 +1,7 @@
 <div class="d-flex justify-content-center align-items-center h-100">
     <form action="<?= ROOT ?>/chambre/addRoom" method="post" class="w-50" id="formAddRoom">
+        <div class="alert" id="alert">
+        </div>
         <div class="form-group mb-4">
             <label>Numero de chambre</label>
             <input class="form-control" type="text" name="num" id="num" placeholder="Exemple: 004-0019" readonly>

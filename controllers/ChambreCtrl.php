@@ -26,6 +26,7 @@ class ChambreCtrl extends Controller {
     }
 
     public function addRoom(){
+        $resp = [];
         if(isset($_POST['num']) && isset($_POST['type']) && isset($_POST['numBat'])){
             extract($_POST);
             // Validation
@@ -33,10 +34,15 @@ class ChambreCtrl extends Controller {
             $this->validator->isVide($type, "type", "Le type de chambre est obligatoire");
             $this->validator->isVide($numBat, "numBat", "Le numero de batiment est obligatoire");
             if($this->validator->isValid()){
-                
-                echo json_encode($_POST);
+                if($this->dao->add($_POST) > 0){
+                    $resp = ["type" => "success", "message" => "La chambre est bien enregistrée"];
+                }else{
+                    $resp = ["type" => "danger", "message" => "L'enregistrement a echoué"];
+                }
+                echo json_encode($resp);
             }else{
-                echo json_encode("Error");
+                $resp = ["statut" => "danger", "message" => "Les données sont invalides"];
+                echo json_encode($resp);
             }
         }
     }
