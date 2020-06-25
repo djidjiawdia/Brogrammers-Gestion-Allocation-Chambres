@@ -27,7 +27,7 @@
             <div class="title">
                 <?= $title ?>
             </div>
-            <div class="container">
+            <div class="wrapper m-3">
                 <?= $content_for_layout ?>
             </div>
         </div>
