@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="<?= ROOT ?>/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/public/css/style.css">
+
+    <script src="<?= ROOT ?>/public/js/jquery-3.4.1.min.js"></script>
     
 </head>
 <body>
@@ -35,7 +37,6 @@
 
     <script src="<?= ROOT ?>/public/js/all.min.js"></script>
     <script src="<?= ROOT ?>/public/js/bootstarp.min.js"></script>
-    <script src="<?= ROOT ?>/public/js/jquery-3.4.1.min.js"></script>
     <script src="<?= ROOT ?>/public/js/script.js"></script>
 </body>
 </html>

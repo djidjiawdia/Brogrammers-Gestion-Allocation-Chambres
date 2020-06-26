@@ -77,6 +77,12 @@
     height: 100%;
     margin: 20px;
     border: 1px solid var(--my-primary-color);
+    /* overflow: hidden; */
+}
+
+#scrollZone{
+    max-height: 200px;
+    overflow: scroll;
 }
 
 .title{
@@ -92,6 +98,10 @@
 .wrapper{
     width: 100%;
     height: 80vh;
+}
+
+.form-search{
+    display: flex;
 }
 
 

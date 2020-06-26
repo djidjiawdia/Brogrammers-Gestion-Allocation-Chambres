@@ -1,6 +1,6 @@
 <?php
 
-class Etudiant {
+class Etudiant implements IModels {
     protected $id;
     protected $mat;
     protected $nom;
@@ -9,6 +9,22 @@ class Etudiant {
     protected $email;
     protected $type;
 
+    public function __construct($row = null){
+        if($row != null){
+            $this->hydrate($row);
+        }
+    }
+
+    public function hydrate($row){
+        $this->id = $row["id"];
+        $this->mat = $row["mat"];
+        $this->nom = $row["nom"];
+        $this->prenom = $row["prenom"];
+        $this->email = $row["email"];
+        $this->tel = $row["tel"];
+        $this->type = $row["type"];
+    }
+    
     public function getId(){
         return $this->id;
     }

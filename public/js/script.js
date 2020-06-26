@@ -51,6 +51,8 @@ $(document).ready(function(){
             })
         }
     })
+
+    
 })
 
 function checkRequired(inputArray){

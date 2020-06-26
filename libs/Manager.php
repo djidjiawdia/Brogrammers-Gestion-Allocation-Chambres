@@ -43,20 +43,12 @@ abstract class Manager implements IDao {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($data);
         $result = $stmt->fetchAll();
-        $data = [];
-        foreach( $result as $rowBD){
-            //ORM=> tuple BD transformer en Objet
-            $data[] = new $this->className($rowBD);//new class($rowBD)     
-        }
         $this->closeConnexion();
-        return $data;
+        return $result;
     }
 
     public function findAll(){
-        $sql = "
-            SELECT * 
-            FROM $this->tableName
-        ";
+        $sql = "SELECT * FROM $this->tableName";
         return $this->executeSelect($sql);
     }
 

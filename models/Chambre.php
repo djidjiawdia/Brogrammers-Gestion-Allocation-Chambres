@@ -18,6 +18,7 @@ class Chambre implements IModels {
         $this->id = $row["id"];
         $this->num = $row["num"];
         $this->type = $row["type"];
+        $this->batiment = new Batiment();
     }
     
     public function getId(){
@@ -32,6 +33,10 @@ class Chambre implements IModels {
         return $this->type;
     }
 
+    public function getBatiment(){
+        return $this->batiment;
+    }
+
     public function setId($id){
         $this->id = $id;
     }
@@ -42,6 +47,10 @@ class Chambre implements IModels {
 
     public function setType($type){
         $this->type = $type;
+    }
+
+    public function setBatiment($batiment){
+        $this->batiment = $batiment;
     }
 
 }
