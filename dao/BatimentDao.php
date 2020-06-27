@@ -8,5 +8,14 @@ class BatimentDao extends Manager {
 
     public function add($obj){}
     public function update($obj){}
+
+    public function allBat(){
+        $result = [];
+        $data = $this->findAll();
+        foreach($data as $d){
+            $result[] = new $this->className($d);
+        }
+        return $result;
+    }
     
 }

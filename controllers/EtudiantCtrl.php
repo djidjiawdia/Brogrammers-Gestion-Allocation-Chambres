@@ -6,6 +6,7 @@ class EtudiantCtrl extends Controller {
         $this->folder = "etudiant";
         $this->layout = "default";
         $this->dao = new EtudiantDao();
+        $this->validator = new Validator();
     }
 
     public function index(){
@@ -20,7 +21,7 @@ class EtudiantCtrl extends Controller {
     public function showAll(){
         extract($_POST);
         $etudiant = [];
-        $datas = $this->dao->showStudent($limit, $offset);
+        $datas = $this->dao->showStudent($limit, $offset, $mat, $type);
         foreach($datas as $d){
             if($d->getType() == "boursier"){
                 if($d->getStatut() == "logier"){
@@ -33,12 +34,12 @@ class EtudiantCtrl extends Controller {
         $body = '';
         foreach($etudiant as $d){
             $tr = '
-                <tr>
+                <tr id="'. $d->getId().'">
                     <td>'.$d->getMat().'</td>
-                    <td>'. $d->getPrenom().'</td>
-                    <td>'. strtoupper($d->getNom()).'</td>
-                    <td>'. $d->getEmail().'</td>
-                    <td>'. $d->getTel().'</td>';
+                    <td class="edit" id="prenom">'. $d->getPrenom().'</td>
+                    <td class="edit" id="nom">'. strtoupper($d->getNom()).'</td>
+                    <td class="edit" id="email">'. $d->getEmail().'</td>
+                    <td class="edit" id="tel">'. $d->getTel().'</td>';
                     if($d->getType() == "boursier"){
                         $tr .= '<td>'. $d->getMontant().'</td>';
                         if($d->getStatut() == "logier"){
@@ -51,7 +52,7 @@ class EtudiantCtrl extends Controller {
                             <td>'. $d->getAdresse().'</td>';
                     }
                     $tr .= '<td class="text-danger">
-                        <button class="btn btn-danger deleteStud" id="'. $d->getId().'"><span><i class="fas fa-trash"></i></span></button>
+                        <button class="btn btn-danger deleteStud"><span><i class="fas fa-trash"></i></span></button>
                     </td>
                 </tr>
             ';
@@ -62,6 +63,31 @@ class EtudiantCtrl extends Controller {
     
     public function nouveau(){
         echo "ajouter nouveau etudiant";
+    }
+
+    public function updateEtudiant(){
+        if(isset($_POST['id']) && isset($_POST['champ']) && isset($_POST['val'])){
+            extract($_POST);
+            $this->validator->isVide($val, $champ, "{$champ} est obligatoire");
+            if($champ == "email"){
+                $this->validator->validWithRegex($val, '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $champ, "$champ invalid");
+            }elseif($champ == "tel"){
+                $this->validator->validWithRegex($val, '/(7[7860])+([0-9]{7})$/', $champ, "$champ invalid");
+            }elseif($champ == "prenom"){
+                $this->validator->validWithRegex($val, '/^[A-Za-z ]*$/', $champ, "$champ invalid");
+            }
+            if($this->validator->isValid()){
+                // echo json_encode($this->dao->updateEtudiant($_POST));die();
+                if($this->dao->updateEtudiant($_POST)){
+                    $resp = ["type" => "success", "message" => "Etudiant modifié"];
+                }else{
+                    $resp = ["type" => "error", "message" => "Impossoble de modifier"];
+                }
+            }else{
+                $resp = ["statut" => "error", "message" => "Donnée invalide"];
+            }
+            echo json_encode($resp);
+        }
     }
     
 }

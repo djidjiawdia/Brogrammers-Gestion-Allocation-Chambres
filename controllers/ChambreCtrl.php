@@ -19,7 +19,7 @@ class ChambreCtrl extends Controller {
         $this->data_view = [
             "title" => "Ajouter une chambre",
             "id" => $this->dao->lastId(),
-            "batiments" => $batiment->findAll()
+            "batiments" => $batiment->allBat()
         ];
         $this->view = "addNew";
         $this->render();

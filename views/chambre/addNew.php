@@ -28,7 +28,7 @@
                     <option value="<?= $bat->getNumBat() ?>"><?= $bat->getLibele() ?></option>
                 <?php endforeach; ?>
             </select>
-            <small></small>
+            <small class="text-danger"></small>
         </div>
         <input type="hidden" id="lastId" value="<?= $id ?>">
         <button type="submit" class="btn btn-primary btn-sm">Valider</button>
