@@ -18,9 +18,8 @@
                     <option value="non_logier">Non Logier</option>
                 </select>
             </div>
-            <div class="col-4 row">
+            <div class="col-4">
                 <button type="submit" class="btn btn-primary btn-sm mb-2 mr-2">Chercher</button>
-                <button class="btn btn-danger btn-sm mb-2 mr-2">Effacer</button>
             </div>
         </div>
     </form>
@@ -48,6 +47,7 @@
 </div>
 
 <script>
+    let text = '';
     $(document).ready(function(){
         let offset = 0;
         let mat = "";
@@ -63,8 +63,12 @@
             },
             success: function(res){
                 tbody.html('')
-                tbody.html(res);
-                offset += 2;
+                if(res != ''){
+                    tbody.html(res);
+                    offset += 2;
+                }else{
+                    tbody.html('<tr><td colspan="8">Not Found</td></tr>');
+                }
             }
         });
         
@@ -111,9 +115,25 @@
                     }
                 }
             });
-        })
+        });
     });
-    let text = '';
+
+    $(document).on("click", ".deleteStud", function(){
+        if(confirm("Voulez-vous supprimer")){
+            $.ajax({
+                url: '<?= ROOT ?>/etudiant/deleteStud',
+                type: 'POST',
+                data: {id: $(this).attr("id")},
+                dataType: 'JSON',
+                success: function(res){
+                    if(res.type == 'success'){
+                        alert(res.message);
+                        location.reload();
+                    }
+                }
+            })
+        }
+    });
 
     $(document).on('dblclick', '.edit', function(e){
         e.preventDefault();
@@ -127,45 +147,6 @@
     })
     $(document).on('focusout', '.edit', function(){
         $(this).html(text);
-        // const data = {
-        //     "id": $("#inputChange").attr("data-id"),
-        //     "champ": $(this).attr("id"),
-        //     "val": $("#inputChange").val()
-        // };
-        // console.log(validWithRegex(data.val, /^[A-Za-z]*$/));
-        // if(data.val == ''){
-        //     $("#inputChange").addClass("is-invalid");
-        //     return;
-        // }else if(data.champ == 'nom' && !validWithRegex(data.val, /^[A-Za-z]*$/)){
-        //     $("#inputChange").addClass("is-invalid");
-        //     return;
-        // }else if(data.champ == 'prenom' && !validWithRegex(data.val, /^[A-Za-z ]*$/)){
-        //     $("#inputChange").addClass("is-invalid");
-        //     return;
-        // }else if(data.champ == 'email' && !validWithRegex(data.val, /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
-        //     $("#inputChange").addClass("is-invalid");
-        //     return;
-        // }else if(data.champ == 'tel' && !validWithRegex(data.val, /(7[7860])+([0-9]{7})$/)){
-        //     $("#inputChange").addClass("is-invalid");
-        //     return;
-        // }else{
-        //     $.ajax({
-        //         url: '<?= ROOT ?>/etudiant/updateEtudiant',
-        //         type: 'POST',
-        //         data: data,
-        //         dataType: 'json',
-        //         success: function(res){
-        //             console.log(res)
-        //             if(res.type == "success"){
-        //                 alert(res.message);
-        //             }else{
-        //                 alert(res.message);
-        //                 return;
-        //             }        
-        //         }
-        //     });
-        //     $(this).html($("#inputChange").val());
-        // }
     });
     $(document).on('keyup', ".edit", function(e){
         if(e.keyCode == 27){ // Touche echap

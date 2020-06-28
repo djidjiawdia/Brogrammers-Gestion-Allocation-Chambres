@@ -52,7 +52,7 @@ class EtudiantCtrl extends Controller {
                             <td>'. $d->getAdresse().'</td>';
                     }
                     $tr .= '<td class="text-danger">
-                        <button class="btn btn-danger deleteStud"><span><i class="fas fa-trash"></i></span></button>
+                        <button class="btn btn-danger deleteStud" id="'. $d->getId() .'"><span><i class="fas fa-trash"></i></span></button>
                     </td>
                 </tr>
             ';
@@ -62,7 +62,14 @@ class EtudiantCtrl extends Controller {
     }
     
     public function nouveau(){
-        echo "ajouter nouveau etudiant";
+        $chambre = new ChambreDao();
+        $this->data_view = [
+            "title" => "Ajouter un étudiant",
+            "chambre" => $chambre->showDispo(),
+            "id" => $this->dao->lastId()
+        ];
+        $this->view = 'nouveau';
+        $this->render();
     }
 
     public function updateEtudiant(){
@@ -88,6 +95,17 @@ class EtudiantCtrl extends Controller {
             }
             echo json_encode($resp);
         }
+    }
+
+    public function deleteStud(){
+        if(isset($_POST['id'])){
+            if($this->dao->delete($_POST['id'])){
+                $resp = ["type" => "success", "message" => "Etudiant supprimé avec success"];
+            }else{
+                $resp = ["type" => "error", "message" => "Impossible de supprimer l'étudiant"];
+            }
+        }
+        echo json_encode($resp);
     }
     
 }

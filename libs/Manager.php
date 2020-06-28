@@ -4,6 +4,10 @@ abstract class Manager implements IDao {
     // fermer la connexion
     private $pdo = null;
 
+    // private $host = "mysql-broogrammers.alwaysdata.net";
+    // private $dbname = "broogrammers_allocation_chambre";
+    // private $user = "209416";
+    // private $pass = "Brogrammer2020";
     private $host = "localhost";
     private $dbname = "gestion_chambre";
     private $user = "root";
@@ -59,8 +63,8 @@ abstract class Manager implements IDao {
     }
 
     public function delete($id){
-    $sql="delete from $this->tableName where id=$id";
-    return $this->executeUpdate($sql)!=0;
+        $sql="delete from $this->tableName where id=$id";
+        return $this->executeUpdate($sql) != 0;
     }
 
     public function lastId(){

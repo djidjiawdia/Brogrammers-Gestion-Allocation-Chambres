@@ -52,8 +52,31 @@ $(document).ready(function(){
         }
     })
 
-    
+    // Form Ajouter Etudiant
+    $("#formAddStud").on("submit", function(e){
+        e.preventDefault();
+        console.log($(this).serialize());
+    })
 })
+
+
+function generateChoice(label1, label2, label3, name, val1, val2){
+    return `
+        <div class="form-group col-sm-6">
+            <label>${label1}</label>
+            <div class="d-flex justify-content-around" id="type">
+                <label for="${val1}">
+                    <input type="radio" name="${name}" id="${val1}" value="${val1}">
+                    ${label2}
+                </label>
+                <label for="${val2}">
+                    <input type="radio" name="${name}" id="${val2}" value="${val2}">
+                    ${label3}
+                </label>
+            </div>
+        </div>
+    `;
+}
 
 function generateNumChambre(id, val){
     let num = '';
