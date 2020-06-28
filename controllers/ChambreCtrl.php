@@ -46,4 +46,36 @@ class ChambreCtrl extends Controller {
             }
         }
     }
+
+    public function showRoom(){
+        extract($_POST);
+        $data = $this->dao->showRooms($limit, $offset);
+        $output = "";
+        foreach($data as $d){
+            $tr =  '';
+            $tr = '
+                <tr id="'. $d->getId().'">
+                    <td>'.$d->getNum().'</td>
+                    <td>'. $d->getType().'</td>
+                    <td></td>
+                    <td>
+                        <button class="btn btn-warning editRoom" id="'. $d->getId() .'"><span><i class="fas fa-edit"></i></span></button>
+                        <button class="btn btn-danger deleteRoom" id="'. $d->getId() .'"><span><i class="fas fa-trash"></i></span></button>
+                    </td>
+                </tr>
+            ';
+            $output .= $tr;
+        }
+        echo json_encode(["body" => $output, "rows" => count($this->dao->findAll())]);
+        //             <tr>
+        //                 <td colspan="4">Pas de joueurs</td>
+        //             </tr>
+        //         </tbody>
+        //     </table>
+        //     <div class="pagination">
+        //         <p>Page :</p>
+        //         <ol id="numbers"></ol>
+        //     </div>
+        // ';
+    }
 }

@@ -10,12 +10,8 @@ class BatimentDao extends Manager {
     public function update($obj){}
 
     public function allBat(){
-        $result = [];
-        $data = $this->findAll();
-        foreach($data as $d){
-            $result[] = new $this->className($d);
-        }
-        return $result;
+        $sql = "SELECT * FROM $this->tableName";
+        return $this->returnObject($sql);
     }
     
 }

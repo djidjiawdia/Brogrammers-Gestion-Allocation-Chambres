@@ -16,6 +16,16 @@ class ChambreDao extends Manager {
 
     }
 
+    public function showRooms($limit, $offset){
+        $sql = "
+            SELECT * 
+            FROM $this->tableName
+            LIMIT {$limit} 
+            OFFSET {$offset}
+        ";
+        return $this->returnObject($sql);
+    }
+
     public function showDispo(){
         $sql = "
             SELECT *
@@ -32,12 +42,7 @@ class ChambreDao extends Manager {
                          GROUP BY idChambre
                          HAVING COUNT(id) < 2)
         ";
-        $result = [];
-        $data = $this->executeSelect($sql);
-        foreach($data as $d){
-            $result[] = new $this->className($d);
-        }
-        return $result;
+        return $this->returnObject($sql);
     }
 
 }

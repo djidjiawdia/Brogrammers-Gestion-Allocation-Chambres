@@ -76,5 +76,14 @@ abstract class Manager implements IDao {
         $this->closeConnexion();
         return $lastId['id'];
     }
+
+    public function returnObject($sql){
+        $result = [];
+        $data = $this->executeSelect($sql);
+        foreach($data as $d){
+            $result[] = new $this->className($d);
+        }
+        return $result;
+    }
     
 }
